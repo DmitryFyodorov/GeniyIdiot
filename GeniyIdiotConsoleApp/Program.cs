@@ -39,8 +39,7 @@ while (isOpenApp)
     Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
     Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {diagnoses[countRightAnswers]}\n");
     
-    Console.WriteLine("Хотите продолжить? Введите 'да' или 'нет'");
-    isOpenApp = IsYes(Console.ReadLine());
+    isOpenApp = IsRepeatTest();
 
     Clear();
 }
@@ -85,9 +84,27 @@ List<string> GetDiagnoses()
     return diagnoses;
 }
 
+bool IsRepeatTest()
+{
+    while(true)
+    {
+        Console.WriteLine("Хотите пройти тест снова? Введите 'да' или 'нет'");
+        var userAnswer = Console.ReadLine().ToLower();
+        if (userAnswer == "да" || userAnswer == "нет")
+            return IsYes(userAnswer);
+        ShowMistake();
+    }
+}
+
 bool IsYes(string userAnswer)
 {
-    return userAnswer.ToLower() == "да";    
+   
+        return userAnswer == "да";
+}
+
+void ShowMistake()
+{
+    Console.WriteLine("Вы ввели некорректные данные.\n");
 }
 
 void Clear()
