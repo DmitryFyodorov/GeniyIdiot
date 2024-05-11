@@ -20,12 +20,10 @@ while (isOpenApp)
     {
         var randomQuestinIndex = random.Next(0, questions.Count);
 
-        Console.WriteLine($"Вопрос №{i + 1}:\n{questions[randomQuestinIndex]}");
-
+        Console.WriteLine($"\nВопрос №{i + 1}:\n{questions[randomQuestinIndex]}");
         var userAnswer = Convert.ToInt32(Console.ReadLine());
 
         var rightAnwers = answers[randomQuestinIndex];
-
         if (userAnswer == rightAnwers)
         {
             countRightAnswers++;
@@ -34,11 +32,12 @@ while (isOpenApp)
         }
     }
 
-    Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
+    Console.WriteLine($"Количество правильных ответов: {countRightAnswers}\n");
     Console.WriteLine($"{userFirstName} {userLastName} Ваш диагноз: " + diagnoses[countRightAnswers]);
 
     Console.WriteLine("Хотите продолжить? Введите 'да' или 'нет'");
     isOpenApp = IsYes(Console.ReadLine());
+    Console.Clear();
 }
 
 List<string> GetQuestions()
