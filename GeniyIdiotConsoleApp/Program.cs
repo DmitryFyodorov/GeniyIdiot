@@ -11,10 +11,10 @@ while (isOpenApp)
     var questions = GetQuestions();
     var answers = GetAnswers();
     var diagnoses = GetDiagnoses();
-    var countRightAnswers = 0;
 
-    var random = new Random();
+    var countRightAnswers = 0;
     var questionsCount = questions.Count;
+    var random = new Random();    
 
     for (int i = 0; i < questionsCount; i++)
     {
