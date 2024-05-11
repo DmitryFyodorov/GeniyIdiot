@@ -1,6 +1,8 @@
-﻿Console.WriteLine("Введите ваше имя:");
+﻿Console.WriteLine("Добро пожаловать в игру \"Гений - Идиот\"!\n");
+
+Console.WriteLine("Введите ваше имя:");
 var userFirstName = Console.ReadLine();
-Clear();
+Console.WriteLine();
 
 Console.WriteLine("Введите вашу фамилию:");
 var userLastName = Console.ReadLine();
