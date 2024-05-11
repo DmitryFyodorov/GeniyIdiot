@@ -1,18 +1,9 @@
 ﻿var questions = GetQuestions();
-
-var answers = new List<int>()
-{
-    6,
-    9,
-    25,
-    60,
-    2
-};
-
+var answers = GetAnswers();
 var countRightAnswers = 0;
-
 var random = new Random();
 var questionsCount = questions.Count;
+
 for (int i = 0; i < questionsCount; i++)
 {
     var randomQuestinIndex = random.Next(0, questions.Count);
@@ -56,4 +47,17 @@ List<string> GetQuestions()
         "Пять свечей горело, две потухли. Сколько свечей осталось??"
     };
     return questions;
+}
+
+List<int> GetAnswers()
+{
+    var answers = new List<int>()
+    {
+        6,
+        9,
+        25,
+        60,    
+        2
+    };
+    return answers;
 }
