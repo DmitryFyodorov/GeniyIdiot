@@ -1,8 +1,10 @@
 ﻿Console.WriteLine("Введите ваше имя:");
 var userFirstName = Console.ReadLine();
+Clear();
 
 Console.WriteLine("Введите вашу фамилию:");
 var userLastName = Console.ReadLine();
+Clear();
 
 bool isOpenApp = true;
 
@@ -20,7 +22,7 @@ while (isOpenApp)
     {
         var randomQuestinIndex = random.Next(0, questions.Count);
 
-        Console.WriteLine($"\nВопрос №{i + 1}:\n{questions[randomQuestinIndex]}");
+        Console.WriteLine($"Вопрос №{i + 1}:\n{questions[randomQuestinIndex]}");
         var userAnswer = Convert.ToInt32(Console.ReadLine());
 
         var rightAnwers = answers[randomQuestinIndex];
@@ -30,14 +32,15 @@ while (isOpenApp)
             questions.RemoveAt(randomQuestinIndex);
             answers.RemoveAt(randomQuestinIndex);
         }
+        Clear();
     }
-
-    Console.WriteLine($"Количество правильных ответов: {countRightAnswers}\n");
-    Console.WriteLine($"{userFirstName} {userLastName} Ваш диагноз: " + diagnoses[countRightAnswers]);
-
+    Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
+    Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {diagnoses[countRightAnswers]}\n");
+    
     Console.WriteLine("Хотите продолжить? Введите 'да' или 'нет'");
     isOpenApp = IsYes(Console.ReadLine());
-    Console.Clear();
+
+    Clear();
 }
 
 List<string> GetQuestions()
@@ -48,7 +51,7 @@ List<string> GetQuestions()
         "Бревно нужно распилить на 10 частей, сколько надо сделать распилов?",
         "На двух руках 10 пальцев. Сколько пальцев на 5 руках?",
         "Укол делают каждые пол часа, сколько нужно минут для трех уколов?",
-        "Пять свечей горело, две потухли. Сколько свечей осталось??"
+        "Пять свечей горело, две потухли. Сколько свечей осталось?"
     };
     return questions;
 }
@@ -82,9 +85,10 @@ List<string> GetDiagnoses()
 
 bool IsYes(string userAnswer)
 {
-    if (userAnswer.ToLower() == "да")
-    {
-        return true;    
-    }
-    return false;
+    return userAnswer.ToLower() == "да";    
+}
+
+void Clear()
+{
+    Console.Clear();
 }
