@@ -1,40 +1,45 @@
-﻿var questions = GetQuestions();
-var answers = GetAnswers();
-var countRightAnswers = 0;
-var random = new Random();
-var questionsCount = questions.Count;
+﻿Console.WriteLine("Введите ваше имя:");
+var userFirstName = Console.ReadLine();
 
-for (int i = 0; i < questionsCount; i++)
+Console.WriteLine("Введите вашу фамилию:");
+var userLastName = Console.ReadLine();
+
+bool isOpenApp = true;
+
+while (isOpenApp)
 {
-    var randomQuestinIndex = random.Next(0, questions.Count);
+    var questions = GetQuestions();
+    var answers = GetAnswers();
+    var diagnoses = GetDiagnoses();
+    var countRightAnswers = 0;
 
-    Console.WriteLine($"Вопрос №{i + 1}:\n{questions[randomQuestinIndex]}");
+    var random = new Random();
+    var questionsCount = questions.Count;
 
-    var userAnswer = Convert.ToInt32(Console.ReadLine());
-
-    var rightAnwers = answers[randomQuestinIndex];
-
-    if (userAnswer == rightAnwers)
+    for (int i = 0; i < questionsCount; i++)
     {
-        countRightAnswers++;
-        questions.RemoveAt(randomQuestinIndex);
-        answers.RemoveAt(randomQuestinIndex);
+        var randomQuestinIndex = random.Next(0, questions.Count);
+
+        Console.WriteLine($"Вопрос №{i + 1}:\n{questions[randomQuestinIndex]}");
+
+        var userAnswer = Convert.ToInt32(Console.ReadLine());
+
+        var rightAnwers = answers[randomQuestinIndex];
+
+        if (userAnswer == rightAnwers)
+        {
+            countRightAnswers++;
+            questions.RemoveAt(randomQuestinIndex);
+            answers.RemoveAt(randomQuestinIndex);
+        }
     }
+
+    Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
+    Console.WriteLine($"{userFirstName} {userLastName} Ваш диагноз: " + diagnoses[countRightAnswers]);
+
+    Console.WriteLine("Хотите продолжить? Введите 'да' или 'нет'");
+    isOpenApp = IsYes(Console.ReadLine());
 }
-
-Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
-
-var diagnoses = new List<string>()
-{
-    "идиот",
-    "кретин",
-    "дурак",
-    "нормальный",
-    "талант",
-    "гений"
-};
-
-Console.WriteLine("Ваш диагноз: " + diagnoses[countRightAnswers]);
 
 List<string> GetQuestions()
 {
@@ -60,4 +65,27 @@ List<int> GetAnswers()
         2
     };
     return answers;
+}
+
+List<string> GetDiagnoses()
+{
+    var diagnoses = new List<string>()
+    {
+        "идиот",
+        "кретин",
+        "дурак",
+        "нормальный",
+        "талант",
+        "гений"
+    };
+    return diagnoses;
+}
+
+bool IsYes(string userAnswer)
+{
+    if (userAnswer.ToLower() == "да")
+    {
+        return true;    
+    }
+    return false;
 }
