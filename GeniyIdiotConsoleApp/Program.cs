@@ -25,7 +25,7 @@ while (isOpenApp)
         var randomQuestinIndex = random.Next(0, questions.Count);
 
         Console.WriteLine($"Вопрос №{i + 1}:\n{questions[randomQuestinIndex]}");
-        var userAnswer = Convert.ToInt32(Console.ReadLine());
+        var userAnswer = GetDigitalUserAnswer();
 
         var rightAnwers = answers[randomQuestinIndex];
         if (userAnswer == rightAnwers)
@@ -94,6 +94,27 @@ bool IsYes(string question)
         if (userInput == "да" || userInput == "нет")
             return userInput == "да";
         ShowMistake();
+    }
+}
+
+int GetDigitalUserAnswer()
+{
+    while(true)
+    {
+        try
+        {
+            return int.Parse(Console.ReadLine());
+        }
+        catch (OverflowException)
+        {
+            ShowMistake();
+            Console.WriteLine("Слишком большое число! Введите число от -2 000 000 000 до 2 000 000 000!");
+        }
+        catch (FormatException)
+        {
+            ShowMistake();
+            Console.WriteLine("Пожалуйста, введите число:");
+        }
     }
 }
 
