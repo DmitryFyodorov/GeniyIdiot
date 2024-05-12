@@ -1,11 +1,7 @@
 ﻿Console.WriteLine("Добро пожаловать в игру \"Гений - Идиот\"!\n");
 
-Console.WriteLine("Введите ваше имя:");
-var userFirstName = Console.ReadLine();
-Console.WriteLine();
-
-Console.WriteLine("Введите вашу фамилию:");
-var userLastName = Console.ReadLine();
+var userFirstName = GetUserData("Введите ваше имя:");
+var userLastName = GetUserData("Введите вашу фамилию:");
 Clear();
 
 bool isOpenApp = true;
@@ -84,12 +80,27 @@ List<string> GetDiagnoses()
     return diagnoses;
 }
 
+string GetUserData(string requestedData)
+{
+    while (true)
+    {
+        Console.WriteLine(requestedData);
+        var userData = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);        
+        if (userData.Length == 1)
+        {
+            return userData[0];
+        }
+        ShowMistake();
+        Console.WriteLine("Необходимо ввести всего одно слово");
+    }
+}
+
 bool IsYes(string question)
 {
 
     while (true)
     {
-        Console.WriteLine($"\n{question} Введите да или нет:");
+        Console.WriteLine($"{question} Введите да или нет:");
         var userInput = Console.ReadLine().ToLower();
         if (userInput == "да" || userInput == "нет")
             return userInput == "да";
@@ -120,7 +131,7 @@ int GetDigitalUserAnswer()
 
 void ShowMistake()
 {
-    Console.WriteLine("Вы ввели некорректные данные.\n");
+    Console.WriteLine("\nВы ввели некорректные данные.");
 }
 
 void Clear()
