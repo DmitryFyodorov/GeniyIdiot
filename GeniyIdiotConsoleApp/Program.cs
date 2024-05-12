@@ -25,16 +25,22 @@ while (isOpenApp)
         var rightAnwers = answers[randomQuestinIndex];
         if (userAnswer == rightAnwers)
         {
-            correctAnswersCount++;
-            questions.RemoveAt(randomQuestinIndex);
-            answers.RemoveAt(randomQuestinIndex);
+            correctAnswersCount++;            
         }
-        Clear();
+        questions.RemoveAt(randomQuestinIndex);
+        answers.RemoveAt(randomQuestinIndex);
+        //Clear();
     }
 
-    var diagnosis = GetResult(correctAnswersCount, questionsCount);
+    var userDiagnosis = GetUserDiagnosis(correctAnswersCount, questionsCount);
+    SaveResult(userFirstName, userLastName, correctAnswersCount, userDiagnosis);
+
     Console.WriteLine($"Количество правильных ответов: {correctAnswersCount}");
-    Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {diagnosis}\n");
+    Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {userDiagnosis}\n");
+
+    var userChoice = IsYes("Показать таблицу результатов?");
+    if (userChoice)
+        ShowAllResults();
 
     isOpenApp = IsYes("Хотите пройти тест снова?");
 
@@ -81,7 +87,7 @@ List<string> GetDiagnoses()
     return diagnoses;
 }
 
-string GetResult(int questionsCount, int correctAnswersCount)
+string GetUserDiagnosis(int correctAnswersCount, int questionsCount)
 {
     var diagnosis = GetDiagnoses();
 
@@ -107,6 +113,41 @@ string GetResult(int questionsCount, int correctAnswersCount)
         return diagnosis[1];
     }
     return diagnosis[0];
+}
+
+
+void SaveResult(string userFirstName, string userLastName, int correctAnswersCount, string userDiagnosis)
+{
+    var resultsFile = "results.txt";
+    File.AppendAllText(resultsFile, $"{userFirstName} {userLastName} {correctAnswersCount} {userDiagnosis}" + Environment.NewLine);
+}
+
+string[] GetResults()
+{
+    var results = "results.txt";
+    return File.ReadAllLines(results);
+}
+
+void ShowAllResults()
+{
+    var allResults = GetResults();
+    ShowTable(allResults);
+}
+
+void ShowTable(string[] allResults)
+{
+    var tableFormat = "{0, -25} || {1, -18} || {2, -10}";
+
+    Console.WriteLine("Таблица результатов тестирования:");
+    Console.WriteLine(tableFormat, "Имя и фамилия", "Правильные ответы", "Диагноз");
+    foreach (var result in allResults)
+    {
+        var tempResult = result.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var fullName = $"{tempResult[0]} {tempResult[1]}";
+        var correctAnswersCount = tempResult[2];
+        var diagnosis = tempResult[3];
+        Console.WriteLine(tableFormat, fullName, correctAnswersCount, diagnosis);
+    }
 }
 
 string GetUserData(string requestedData)
