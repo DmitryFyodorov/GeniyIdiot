@@ -9,10 +9,9 @@ bool isOpenApp = true;
 while (isOpenApp)
 {
     var questions = GetQuestions();
-    var answers = GetAnswers();
-    var diagnoses = GetDiagnoses();
+    var answers = GetAnswers();    
 
-    var rightAnswersCount = 0;
+    var correctAnswersCount = 0;
     var questionsCount = questions.Count;
     var random = new Random();    
 
@@ -26,14 +25,16 @@ while (isOpenApp)
         var rightAnwers = answers[randomQuestinIndex];
         if (userAnswer == rightAnwers)
         {
-            rightAnswersCount++;
+            correctAnswersCount++;
             questions.RemoveAt(randomQuestinIndex);
             answers.RemoveAt(randomQuestinIndex);
         }
         Clear();
     }
-    Console.WriteLine($"Количество правильных ответов: {rightAnswersCount}");
-    Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {diagnoses[rightAnswersCount]}\n");
+
+    var diagnosis = GetResult(correctAnswersCount, questionsCount);
+    Console.WriteLine($"Количество правильных ответов: {correctAnswersCount}");
+    Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {diagnosis}\n");
 
     isOpenApp = IsYes("Хотите пройти тест снова?");
 
@@ -78,6 +79,34 @@ List<string> GetDiagnoses()
         "гений"
     };
     return diagnoses;
+}
+
+string GetResult(int questionsCount, int correctAnswersCount)
+{
+    var diagnosis = GetDiagnoses();
+
+    var correctAnswersPercent = (double)correctAnswersCount * 100 / questionsCount;
+    if (correctAnswersPercent == 100)
+    {
+        return diagnosis[5];
+    }
+    if (correctAnswersPercent >= 80)
+    {
+        return diagnosis[4];
+    }
+    if (correctAnswersPercent >= 60)
+    {
+        return diagnosis[3];
+    }
+    if (correctAnswersPercent >= 40)
+    {
+        return diagnosis[2];
+    }
+    if (correctAnswersPercent >= 20)
+    {
+        return diagnosis[1];
+    }
+    return diagnosis[0];
 }
 
 string GetUserData(string requestedData)
