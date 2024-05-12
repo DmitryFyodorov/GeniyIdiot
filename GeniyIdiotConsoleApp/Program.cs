@@ -16,7 +16,7 @@ while (isOpenApp)
     var answers = GetAnswers();
     var diagnoses = GetDiagnoses();
 
-    var countRightAnswers = 0;
+    var rightAnswersCount = 0;
     var questionsCount = questions.Count;
     var random = new Random();    
 
@@ -30,16 +30,16 @@ while (isOpenApp)
         var rightAnwers = answers[randomQuestinIndex];
         if (userAnswer == rightAnwers)
         {
-            countRightAnswers++;
+            rightAnswersCount++;
             questions.RemoveAt(randomQuestinIndex);
             answers.RemoveAt(randomQuestinIndex);
         }
         Clear();
     }
-    Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
-    Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {diagnoses[countRightAnswers]}\n");
-    
-    isOpenApp = IsRepeatTest();
+    Console.WriteLine($"Количество правильных ответов: {rightAnswersCount}");
+    Console.WriteLine($"{userFirstName} {userLastName}, ваш диагноз: {diagnoses[rightAnswersCount]}\n");
+
+    isOpenApp = IsYes("Хотите пройти тест снова?");
 
     Clear();
 }
@@ -84,22 +84,17 @@ List<string> GetDiagnoses()
     return diagnoses;
 }
 
-bool IsRepeatTest()
+bool IsYes(string question)
 {
-    while(true)
+
+    while (true)
     {
-        Console.WriteLine("Хотите пройти тест снова? Введите 'да' или 'нет'");
-        var userAnswer = Console.ReadLine().ToLower();
-        if (userAnswer == "да" || userAnswer == "нет")
-            return IsYes(userAnswer);
+        Console.WriteLine($"\n{question} Введите да или нет:");
+        var userInput = Console.ReadLine().ToLower();
+        if (userInput == "да" || userInput == "нет")
+            return userInput == "да";
         ShowMistake();
     }
-}
-
-bool IsYes(string userAnswer)
-{
-   
-        return userAnswer == "да";
 }
 
 void ShowMistake()
